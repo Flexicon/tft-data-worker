@@ -1,15 +1,19 @@
 package api
 
 import api.responses.League
-import com.github.kittinunf.fuel.Fuel
+import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.serialization.responseObject
-import kotlinx.serialization.json.Json
 
 class RiotApi(private val apiKey: String) {
     fun getLeague(name: String): League {
-        val (_, _, result) = Fuel.get("$BASE_URL/tft/league/v1/$name")
+        return get("/tft/league/v1/$name")
+    }
+
+    private inline fun <reified T : Any> get(resource: String): T {
+        val (_, _, result) = "$BASE_URL$resource"
+            .httpGet()
             .header(AUTH_HEADER, apiKey)
-            .responseObject<League>(json = Json.Default)
+            .responseObject<T>()
 
         return result.get()
     }

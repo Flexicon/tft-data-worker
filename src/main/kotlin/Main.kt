@@ -13,7 +13,7 @@ fun main() {
 
 fun RiotApi.printLeague(name: String) {
     val league = getLeague(name)
-    println("Master league: \"${league.name}\"")
+    println("${league.tier} LEAGUE: \"${league.name}\"")
 
     league.entries
         .sortedByDescending { it.leaguePoints }
