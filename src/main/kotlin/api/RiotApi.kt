@@ -19,7 +19,8 @@ class RiotApi(private val apiKey: String) {
     }
 
     companion object {
-        private val BASE_URL = "https://eun1.api.riotgames.com"
-        private val AUTH_HEADER = "X-Riot-Token"
+        // TODO: consider making the region configurable
+        private const val BASE_URL = "https://eun1.api.riotgames.com"
+        private const val AUTH_HEADER = "X-Riot-Token"
     }
 }
