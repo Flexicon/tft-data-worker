@@ -5,8 +5,8 @@ import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.serialization.responseObject
 
 class RiotApi(private val apiKey: String) {
-    fun getLeague(name: String): League {
-        return get("/tft/league/v1/$name")
+    fun getLeague(tier: LeagueTier): League {
+        return get("/tft/league/v1/$tier")
     }
 
     private inline fun <reified T : Any> get(resource: String): T {

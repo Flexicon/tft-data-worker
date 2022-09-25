@@ -1,3 +1,5 @@
+import api.LeagueTier
+import api.Leagues
 import api.RiotApi
 
 // TODO: How best to figure out the best builds available in the current league meta:
@@ -14,13 +16,13 @@ fun main() {
 
     println("TFT data worker")
 
-    client.printLeague("master")
-    client.printLeague("challenger")
-    client.printLeague("grandmaster")
+    client.printLeague(Leagues.MASTER)
+    client.printLeague(Leagues.CHALLENGER)
+    client.printLeague(Leagues.GRANDMASTER)
 }
 
-fun RiotApi.printLeague(name: String) {
-    val league = getLeague(name)
+fun RiotApi.printLeague(tier: LeagueTier) {
+    val league = getLeague(tier)
     println("${league.tier} LEAGUE: \"${league.name}\"")
 
     league.entries
