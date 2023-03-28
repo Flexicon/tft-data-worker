@@ -22,40 +22,40 @@ fun main() {
 
     println("Fetching ${Leagues.MASTER} league...")
     val league = client.getAndPrintLeague(Leagues.MASTER)
-    val summoners = league.topEntries().map { client.getSummonerByName(it.summonerName) }
-
-    println("\nWaiting 1s...")
-    Thread.sleep(1000)
-
-    println("\nFetching top summoner data...\n")
-    val matchesBySummoner = summoners.associateWith { client.getMatchesForSummoner(it) }
-
-    matchesBySummoner.forEach { (summoner, matches) ->
-        println(buildString {
-            append("${summoner.name}:")
-
-            matches.map { it.participant(summoner.puuid) }
-                .filter { it.placement == 1 }
-                .ifEmpty { append("No worthy matches recently."); emptyList() }
-                .forEachIndexed { i, it ->
-                    append("\n\t- Match ${i + 1}")
-                    append("\n\t  Level: ${it.level}")
-                    append("\n\t  Placement: ${it.placement}")
-                    append("\n\t  Traits:")
-                    it.traits
-                        .filter { it.tierCurrent > 0 }
-                        .forEach {
-                            append("\n\t\t - ${it.name} x${it.numUnits} (⭐️${it.tierCurrent}/${it.tierTotal})")
-                        }
-
-                    append("\n\t  Units:")
-                    it.units.forEach {
-                        append("\n\t\t - ${it.name} (#${it.characterId}) ⭐️${it.tier}")
-                    }
-                }
-            append("\n")
-        })
-    }
+//    val summoners = league.topEntries().map { client.getSummonerByName(it.summonerName) }
+//
+//    println("\nWaiting 1s...")
+//    Thread.sleep(1000)
+//
+//    println("\nFetching top summoner data...\n")
+//    val matchesBySummoner = summoners.associateWith { client.getMatchesForSummoner(it) }
+//
+//    matchesBySummoner.forEach { (summoner, matches) ->
+//        println(buildString {
+//            append("${summoner.name}:")
+//
+//            matches.map { it.participant(summoner.puuid) }
+//                .filter { it.placement == 1 }
+//                .ifEmpty { append("No worthy matches recently."); emptyList() }
+//                .forEachIndexed { i, it ->
+//                    append("\n\t- Match ${i + 1}")
+//                    append("\n\t  Level: ${it.level}")
+//                    append("\n\t  Placement: ${it.placement}")
+//                    append("\n\t  Traits:")
+//                    it.traits
+//                        .filter { it.tierCurrent > 0 }
+//                        .forEach {
+//                            append("\n\t\t - ${it.name} x${it.numUnits} (⭐️${it.tierCurrent}/${it.tierTotal})")
+//                        }
+//
+//                    append("\n\t  Units:")
+//                    it.units.forEach {
+//                        append("\n\t\t - ${it.name} (#${it.characterId}) ⭐️${it.tier}")
+//                    }
+//                }
+//            append("\n")
+//        })
+//    }
 }
 
 fun RiotApi.getAndPrintLeague(tier: LeagueTier) = getLeague(tier).also { printLeague(it) }

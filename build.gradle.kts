@@ -1,39 +1,39 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     val kotlinVersion = "1.8.10"
 
-    application
-    kotlin("jvm") version kotlinVersion
+    kotlin("multiplatform") version kotlinVersion
     id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
 }
 
-group = "com.flexicondev"
-version = "1.0-SNAPSHOT"
+group = "com.flexicon"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
 }
 
-dependencies {
-    val kxSVersion = "1.4.0"
-    val fuelVersion = "2.3.1"
+kotlin {
+    linuxX64 {
+        binaries {
+            executable()
+        }
+    }
+    macosArm64 {
+        binaries {
+            executable()
+        }
+    }
 
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kxSVersion")
-    implementation("com.github.kittinunf.fuel:fuel:$fuelVersion")
-    implementation("com.github.kittinunf.fuel:fuel-kotlinx-serialization:$fuelVersion")
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                val ktorVersion = "2.2.1"
 
-    testImplementation(kotlin("test"))
-}
-
-tasks.test {
-    useJUnitPlatform()
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "17"
-}
-
-application {
-    mainClass.set("MainKt")
+                implementation("io.ktor:ktor-client-core:$ktorVersion")
+                implementation("io.ktor:ktor-client-curl:$ktorVersion")
+                implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
+                implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+            }
+        }
+    }
 }
