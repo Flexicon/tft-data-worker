@@ -36,7 +36,7 @@ fun main() {
 
             matches.map { it.participant(summoner.puuid) }
                 .filter { it.placement == 1 }
-                .ifEmpty { println("No worthy matches recently."); emptyList() }
+                .ifEmpty { append("No worthy matches recently."); emptyList() }
                 .forEachIndexed { i, it ->
                     append("\n\t- Match ${i + 1}")
                     append("\n\t  Level: ${it.level}")
