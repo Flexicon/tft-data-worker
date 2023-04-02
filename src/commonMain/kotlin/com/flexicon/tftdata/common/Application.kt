@@ -17,9 +17,11 @@ fun runHandling(fn: suspend () -> Unit): Unit = runBlocking {
         fn()
     }.onFailure {
         println("Error: $it")
-        it.printStackTrace()
+        if (isDebug()) it.printStackTrace()
     }
 }
+
+fun isDebug() = listOf("true", "1").contains(getenv("DEBUG")?.toKString()?.lowercase())
 
 suspend fun runWorker() {
     val apiKey = getenv("RIOT_API_KEY")?.toKString() ?: throw IllegalStateException("Missing RIOT_API_KEY")
