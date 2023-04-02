@@ -1,4 +1,4 @@
-package api
+package com.flexicon.tftdata.common.api
 
 typealias LeagueTier = String
 

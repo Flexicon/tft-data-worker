@@ -1,4 +1,4 @@
-package api.responses
+package com.flexicon.tftdata.common.api.responses
 
 import kotlinx.serialization.Serializable
 
