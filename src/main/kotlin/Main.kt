@@ -5,6 +5,7 @@ import api.responses.League
 import api.responses.Match
 import api.responses.MatchParticipant
 import api.responses.Summoner
+import kotlinx.coroutines.runBlocking
 
 // TODO: How best to figure out the best builds available in the current league meta:
 //
@@ -14,7 +15,7 @@ import api.responses.Summoner
 //    ✅ 1. Retrieving the latest match UUIDs from /tft/match/v1/matches/by-puuid/{puuid}/ids
 //    ✅ 2. Retrieving match data from /tft/match/v1/matches/{matchId}
 //  4. Save this data to a DB to be able to analyse and track it over time
-fun main() {
+fun main() = runBlocking {
     val apiKey = System.getenv("RIOT_API_KEY") ?: throw IllegalStateException("Missing RIOT_API_KEY")
     val client = RiotApi(apiKey)
 
@@ -58,9 +59,9 @@ fun main() {
     }
 }
 
-fun RiotApi.getAndPrintLeague(tier: LeagueTier) = getLeague(tier).also { printLeague(it) }
+suspend fun RiotApi.getAndPrintLeague(tier: LeagueTier) = getLeague(tier).also { printLeague(it) }
 
-fun RiotApi.getMatchesForSummoner(summoner: Summoner): List<Match> =
+suspend fun RiotApi.getMatchesForSummoner(summoner: Summoner): List<Match> =
     getMatchIDsByPUUID(summoner.puuid)
         .take(5)
         .map { getMatch(it) }

@@ -6,6 +6,7 @@ plugins {
     application
     kotlin("jvm") version kotlinVersion
     id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion
+    id("org.graalvm.buildtools.native") version "0.9.20"
 }
 
 group = "com.flexicondev"
@@ -15,13 +16,17 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    val kxSVersion = "1.4.0"
-    val fuelVersion = "2.3.1"
+graalvmNative {
+    toolchainDetection.set(false)
+}
 
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kxSVersion")
-    implementation("com.github.kittinunf.fuel:fuel:$fuelVersion")
-    implementation("com.github.kittinunf.fuel:fuel-kotlinx-serialization:$fuelVersion")
+dependencies {
+    val ktorVersion = "2.2.1"
+
+    implementation("io.ktor:ktor-client-core:$ktorVersion")
+    implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
+    implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
 
     testImplementation(kotlin("test"))
 }
