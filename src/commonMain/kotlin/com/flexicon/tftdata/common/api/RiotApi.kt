@@ -9,7 +9,9 @@ import io.ktor.client.engine.curl.Curl
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
 import io.ktor.client.request.headers
+import io.ktor.client.statement.bodyAsText
 import io.ktor.http.encodeURLPath
+import io.ktor.http.isSuccess
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
@@ -39,6 +41,8 @@ class RiotApi(private val apiKey: String) {
             headers {
                 append(AUTH_HEADER, apiKey)
             }
+        }.also {
+            require(it.status.isSuccess()) { "Bad Riot Api response: ${it.bodyAsText()}" }
         }.body()
 
     companion object {
