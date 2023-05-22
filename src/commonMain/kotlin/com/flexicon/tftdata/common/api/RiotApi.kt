@@ -13,9 +13,10 @@ import io.ktor.client.statement.bodyAsText
 import io.ktor.http.encodeURLPath
 import io.ktor.http.isSuccess
 import io.ktor.serialization.kotlinx.json.json
+import io.ktor.utils.io.core.Closeable
 import kotlinx.serialization.json.Json
 
-class RiotApi(private val apiKey: String) {
+class RiotApi(private val apiKey: String): Closeable {
     suspend fun getLeague(tier: LeagueTier): League =
         get("$BASE_URL/tft/league/v1/$tier")
 
@@ -52,5 +53,9 @@ class RiotApi(private val apiKey: String) {
         private const val AUTH_HEADER = "X-Riot-Token"
 
         private val serializer = Json { ignoreUnknownKeys = true }
+    }
+
+    override fun close() {
+        httpClient.close()
     }
 }
