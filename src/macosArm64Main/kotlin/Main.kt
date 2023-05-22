@@ -1,6 +1,5 @@
-import com.flexicon.tftdata.common.runHandling
-import com.flexicon.tftdata.common.runWorker
+import com.flexicon.tftdata.common.runApplication
 
 fun main() {
-    runHandling { runWorker() }
+    runApplication()
 }
